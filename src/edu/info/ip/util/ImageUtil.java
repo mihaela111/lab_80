@@ -287,9 +287,9 @@ public class ImageUtil {
 
         short[] contrastLUT = new short[256];
 
-        for (int i = 0; i < contrastLUT.length; i++) {
+        for (int i = 0; i < contrastLUT.length; i++) {,
             contrastLUT[i] = (short)constrain(Math.round(scale * i));
-//            System.out.print(contrastLUT[i] + " ");
+          System.out.print(contrastLUT[i] + " ");
         }
 
         ShortLookupTable shortLookupTable = new ShortLookupTable(0, contrastLUT);
@@ -299,17 +299,31 @@ public class ImageUtil {
         return outImg;
     }
 
+    public static BufferedImage contrastLog(BufferedImage inImg, float scale){
+        BufferedImage outImg = new BufferedImage(inImg.getWidth(),inImg.getHeight(),inImg.getType());
+
+        short[] contrastLUT = new short[256];
+
+        for (int i = 0; i < contrastLUT.length; i++) {,
+            contrastLUT[i] = (short)constrain(Math.round(scale * i));
+            System.out.print(contrastLUT[i] + " ");
+        }
+
+        ShortLookupTable shortLookupTable = new ShortLookupTable(0, contrastLUT);
+        LookupOp lookupOp = new LookupOp(shortLookupTable, null);
+        lookupOp.filter(inImg, outImg);
+
+        return outImg;
+    }
+
+
     public static BufferedImage brightnessRGB(BufferedImage inImg, int offsetR, int offsetG, int offsetB){
         BufferedImage outImg = new BufferedImage(inImg.getWidth(),inImg.getHeight(),inImg.getType());
         short[] rLUT = new short[256];
         short[] gLUT = new short[256];
         short[] bLUT = new short[256];
 
-
-
         short[][] rgbLUT = {rLUT,gLUT,bLUT};
-
-
 
         for (int i = 0; i < 256; i++) {
             rLUT[i] = (short)constrain(i + offsetR);
@@ -319,6 +333,32 @@ public class ImageUtil {
         }
 
         ShortLookupTable shortLookupTable = new ShortLookupTable(0, rgbLUT);
+        LookupOp lookupOp = new LookupOp(shortLookupTable, null);
+        lookupOp.filter(inImg, outImg);
+
+        return outImg;
+    }
+    public static BufferedImage contrastGamma(BufferedImage inImg, double gamma){
+        BufferedImage outImg = new BufferedImage(inImg.getWidth(),inImg.getHeight(),inImg.getType());
+
+        short[] contrastLUT = new short[256];
+
+        for (int i = 0; i < contrastLUT.length; i++) {
+
+            double a=i/255.0;
+            double b= Math.pow(a,1.0/ gamma);
+            double c= b*255.0; //scale to 0...255
+
+           // if(i<50)// mpdificarea zonelor inchise (pe portiuni)
+          //  contrastLUT[i] = (short)constrain((int)Math.round(c));
+
+          //  else
+          //      contrastLUT[i]=(short)i;
+            contrastLUT[i] = (short)constrain((int)Math.round(c));
+//            System.out.print(contrastLUT[i] + " ");
+        }
+
+        ShortLookupTable shortLookupTable = new ShortLookupTable(0, contrastLUT);
         LookupOp lookupOp = new LookupOp(shortLookupTable, null);
         lookupOp.filter(inImg, outImg);
 

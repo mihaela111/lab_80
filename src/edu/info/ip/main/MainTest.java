@@ -1,6 +1,7 @@
 package edu.info.ip.main;
 
 import edu.info.ip.util.BrightnessRGBDlg;
+import edu.info.ip.util.GammaDlg;
 
 import java.awt.image.BufferedImage;
 
@@ -40,19 +41,22 @@ public class MainTest {
 //        displayImage(brightnessV2(inputImg,-40), "Brightness V2");
 //        displayImage(brightnessV3(inputImg,40), "Brightness V3");
 //
-//        displayImage(contrast(inputImg,1.5f), "Contrast");
+       displayImage(contrast(inputImg,1.5f), "Contrast");
 
         // combined action
 //        BufferedImage brightness = brightnessV3(inputImg, -40);
-//        BufferedImage contrast = contrast(brightness, 1.5f);
-//        displayImage(contrast, "Brightness+Contrast");
+  //     BufferedImage contrast = contrast(brightness, 1.5f);
+  //      displayImage(contrast, "Brightness+Contrast");
 
       //  BufferedImage testImg = applySettingsDlg(inputImg, new BrightnessDlg());
        // displayImage(testImg);
 
       //  displayImage(brightnessRGB(inputImg,100, 0, 0));
-        BufferedImage testImg=applySettingsDlg(inputImg,new BrightnessRGBDlg());
-        displayImage(testImg);
+       // BufferedImage testImg=applySettingsDlg(inputImg,new BrightnessRGBDlg());
+      //  displayImage(testImg);
+       // displayImage(contrastGamma(inputImg, 3.5));
+      //  displayImage(applySettingsDlg(inputImg, new GammaDlg()));
+
 
 
     }
